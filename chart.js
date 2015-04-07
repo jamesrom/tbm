@@ -59,7 +59,15 @@ var Chart = (function() {
 	svg.append('g')
 		.attr('shape-rendering', 'crispEdges')
 		.attr('class', 'y axis')
-		.attr('transform', 'translate(' + self.width() + ',0)');
+		.attr('transform', 'translate(' + self.width() + ',0)')
+		.append('rect')
+		.attr({
+			x: 0,
+			y: 0,
+			width: '100%',
+			height: self.height(),
+			fill: 'white'
+		});
 
 	svg.selectAll('g.y.axis')
 		.call(yAxis);
@@ -161,6 +169,9 @@ var Chart = (function() {
 		svg.selectAll('g.y.axis')
 			.attr('transform', 'translate(' + Chart.width() + ',0)')
 			.call(yAxis);
+
+		svg.selectAll('g.y.axis rect')
+			.attr('height', self.height());
 	}
 
 	self.zoom = function(delta, pos) {
