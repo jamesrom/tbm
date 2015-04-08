@@ -93,6 +93,11 @@ html, body {
 	text-align: center;
 }
 
+path.average {
+          stroke: black;
+          stroke-width: 1px;
+          fill: none;
+      }
 .footer.web {
 	right: 20px;
 	text-align: right;

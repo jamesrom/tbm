@@ -88,6 +88,8 @@ var Chart = (function() {
 		yPixel = _.flow(_.property('seconds_left'), yScale);
 		flair = _.flow(_.property('seconds_left'), flairColor);
 
+		this.svg.selectAll("path").remove();
+        
 		var rect = svg.selectAll('rect.bar').data(clicks);
 		rect.attr("class", "bar")
 			.attr('x', function(d, i) {
@@ -118,9 +120,41 @@ var Chart = (function() {
 			})
 			.attr('fill', flair);
 
-		rect.exit()
+        
+        var prevPrevVal = 0;
+        var prevVal = 0;
+        var curVal = 0
+        var movingAverageLine = d3.svg.line()
+        .x(function(d,i) { return xScale(i); })
+        .y(function(d,i) {
+            if (i == 0) {
+                prevPrevVal  = yPixel(d);
+                prevVal = yPixel(d);
+                curVal =  yPixel(d);
+            } else if (i == 1) {
+                prevPrevVal = prevVal;
+                prevVal = curVal;
+                curVal = (prevVal + yPixel(d)) / 2.0;
+            } else {
+                prevPrevVal = prevVal;
+                prevVal = curVal;
+                curVal = (prevPrevVal + prevVal + yPixel(d)) / 3.0;
+            }
+            return curVal;
+        })
+        .interpolate("basis");
+
+        rect.enter()
+            .append("path")
+            .attr("class", "average")
+            .attr("id", "id")
+            .attr("d", movingAverageLine(clicks));
+
+        
+        
+        rect.exit()
 			.remove();
-		
+        
 		//Put axis in front of bars in case they overlap
 		svg.select('.y.axis').moveToFront();
 	}
