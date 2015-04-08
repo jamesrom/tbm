@@ -42,6 +42,11 @@ html, body {
 	padding: 0;
 }
 
+#keep {
+	height: 18px;
+	width: 50px;
+}
+
 .github {
 	position: absolute;
 	top: 0;
