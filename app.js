@@ -2,6 +2,7 @@ var data = [];
 var clicks = [];
 var chart, xScale, yScale, xAxis, yAxis, axisScale;
 var mouseX;
+var prevKeep = '0';
 var timerBar, animating = false;
 var sock;
 var fmt = d3.format("0,000");
@@ -17,6 +18,7 @@ function init() {
 	$(window).on('resize', resize);
 	$('#chart').on('mousewheel', mouseWheel)
 			   .on('mousedown', mouseDown);
+	$('#keep').on('change', keepChanged);
 	Stats.start = moment().format("YYYY-MM-DD HH:mm:ss");
 	resize();
 }
@@ -52,6 +54,17 @@ function resize() {
 	else {
 		$('.footer.twitter, .footer.web').show();
 	}
+}
+
+//Triggered when the value is changed, and enter is pressed or input loses focus
+function keepChanged(e) {
+	var i = parseInt($('#keep').val()) || 0;
+	if (i < 0) { i = 0; }
+	
+	//Set the new value or restore old if canceled
+	if (Comms.setKeep(i)) { $('#keep').val(i); }
+	else { $('#keep').val(prevKeep); }
+	prevKeep = $('#keep').val();
 }
 
 //Mouse functions

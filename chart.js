@@ -78,9 +78,20 @@ var Chart = (function() {
 	self.yScale = yScale;
 
 	self.render = function(data) {
-		var clicks = _.filter(data, 'is_click');
 		Stats.resets = clicks.length;
 
+		//Check for scroll and zoom adjustments before setting the domains
+		var rect = svg.selectAll('rect.bar').data(clicks);
+		if (!rect.enter().empty() && zoomLvl > 0) {
+			//If there are new rectangles and we are zoomed in, zoom more to prevent compression
+			if (scrollLvl == zoomLvl) { scrollLvl++; }
+			zoomLvl++;
+		} else if (Comms.newClick && scrollLvl > 0 && scrollLvl < zoomLvl) {
+			//If there are no new rectangles but new clicks, follow the zoomed in section
+			scrollLvl = scrollLvl - 1 < 0 ? 0 : scrollLvl - 1;
+			Comms.newClick = false;
+		}
+		
 		xScale.domain([scrollLvl, clicks.length+1-zoomLvl+scrollLvl]);
 		axisScale.domain([scrollLvl, clicks.length+1-zoomLvl+scrollLvl]);
 		svg.selectAll('g.x.axis')
@@ -89,7 +100,6 @@ var Chart = (function() {
 		yPixel = _.flow(_.property('seconds_left'), yScale);
 		flair = _.flow(_.property('seconds_left'), flairColor);
 
-		var rect = svg.selectAll('rect.bar').data(clicks);
 		rect.attr("class", "bar")
 			.attr('x', function(d, i) {
 				return xScale(i);
