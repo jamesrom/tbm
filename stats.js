@@ -2,6 +2,12 @@ var Stats = (function() {
 	var self = {};
 
 	self.resets = 0;
+	self.f1 = 0;
+	self.f2 = 0;
+	self.f3 = 0;
+	self.f4 = 0;
+	self.f5 = 0;
+	self.f6 = 0;
 	
 	self.render = function() {
 		_(self)
