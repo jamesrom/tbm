@@ -88,9 +88,46 @@ var Chart = (function() {
 	self.xScale = xScale;
 	self.yScale = yScale;
 
+	var oldResetsCount = 0;
+
 	self.render = function(data) {
 		var clicks = _.filter(data, 'is_click');
 		Stats.resets = clicks.length;
+
+		if (Stats.resets != oldResetsCount) {
+			var currentColor = Timer.getCurrentColor();
+
+			switch (currentColor) {
+				case '#820080':
+					Stats.purples++;
+					break;
+
+				case '#0083C7':
+					Stats.blues++;
+					break;
+
+				case '#02be01':
+					Stats.greens++;
+					break;
+
+				case '#E5D900':
+					Stats.yellows++;
+					break;
+
+				case '#e59500':
+					Stats.oranges++;
+					break;
+
+				case '#e50000':
+					Stats.reds++;
+					break;
+
+				default:
+					break;
+			}
+
+			oldResetsCount = Stats.resets;
+		}
 
 		xScale.domain([scrollLvl, clicks.length+1-zoomLvl+scrollLvl]);
 		axisScale.domain([scrollLvl, clicks.length+1-zoomLvl+scrollLvl]);
@@ -210,3 +247,4 @@ var Chart = (function() {
 	
 	return self;
 }());
+

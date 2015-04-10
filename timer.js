@@ -22,9 +22,12 @@ var Timer = (function() {
 		}
 	}
 
+	var color;
+
 	function animate() {
 		animating = true;
 		var timer = (timerEnd - moment());
+		color = flairColor(timer / 1000);
 		timerBar
 			.attr('y', function() {
 				return Chart.yScale(timer / 1000);
@@ -32,7 +35,7 @@ var Timer = (function() {
 			.attr('height', function(d, i) {
 				return Chart.yScale(60) - Chart.yScale(timer / 1000);
 			})
-			.attr('fill', flairColor(timer / 1000));
+			.attr('fill', color);
 		$('#timer').text(fmtSeconds(timer / 1000));
 		requestAnimationFrame(animate);
 	}
@@ -67,5 +70,10 @@ var Timer = (function() {
 	
 	self.updateBar = updateBar;
 
+	self.getCurrentColor = function() {
+		return color;
+	}
+
 	return self;
 }());
+
