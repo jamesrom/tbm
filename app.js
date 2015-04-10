@@ -1,5 +1,7 @@
 var data = [];
 var mouseX;
+var fmt = d3.format("0,000");
+var clicks = [];
 
 //Function to move components to front from D3
 d3.selection.prototype.moveToFront = function() {

@@ -89,7 +89,7 @@ var Chart = (function() {
 	self.yScale = yScale;
 
 	self.render = function(data) {
-		var clicks = _.filter(data, 'is_click');
+		clicks = _.filter(data, 'is_click');
 		Stats.resets = clicks.length;
 
 		xScale.domain([scrollLvl, clicks.length+1-zoomLvl+scrollLvl]);
