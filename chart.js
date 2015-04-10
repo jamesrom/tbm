@@ -92,6 +92,13 @@ var Chart = (function() {
 		var clicks = _.filter(data, 'is_click');
 		Stats.resets = clicks.length;
 
+		Stats.f1 = _.filter(clicks, function (click) {  return flairColor(_.property('seconds_left')(click)) === '#820080'; }).length;
+        Stats.f2 = _.filter(clicks, function (click) {  return flairColor(_.property('seconds_left')(click)) === '#0083C7'; }).length;
+        Stats.f3 = _.filter(clicks, function (click) {  return flairColor(_.property('seconds_left')(click)) === '#02be01'; }).length;
+        Stats.f4 = _.filter(clicks, function (click) {  return flairColor(_.property('seconds_left')(click)) === '#E5D900'; }).length;
+        Stats.f5 = _.filter(clicks, function (click) {  return flairColor(_.property('seconds_left')(click)) === '#e59500'; }).length;
+        Stats.f6 = _.filter(clicks, function (click) {  return flairColor(_.property('seconds_left')(click)) === '#e50000'; }).length;
+
 		xScale.domain([scrollLvl, clicks.length+1-zoomLvl+scrollLvl]);
 		axisScale.domain([scrollLvl, clicks.length+1-zoomLvl+scrollLvl]);
 		svg.selectAll('g.x.axis')

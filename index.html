@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 
 
-	<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet">
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet">
 	<link href="style.css" rel="stylesheet">
 <body>
 	<div id="loading-indicator">
@@ -23,6 +23,13 @@
 			<div>Participants: <span id="participants"></span></div>
 			<div>Resets: <span id="resets"></span></div>
 			<div>Ticks: <span id="ticks"></span></div>
+			<div>Purple: <span id="f1"></span></div>
+			<div>Blue: <span id="f2"></span></div>
+			<div>Green: <span id="f3"></span></div>
+			<div>Yellow: <span id="f4"></span></div>
+			<div>Orange: <span id="f5"></span></div>
+			<div>Red: <span id="f6"></span></div>
+			<div id="pie-container" style="margin: 0 auto"></div>
 		</div>
 		<div id="timer">
 		</div>
@@ -30,17 +37,17 @@
 			Follow <a href="http://twitter.com/jamesrom">@jamesrom</a>
 		</div>
 		<div class="footer email">
-			Fork on <a href="//github.com/jamesrom/jamesrom.github.io/">GitHub</a>. Thanks to <a href="//github.com/jamesrom/jamesrom.github.io/graphs/contributors">contributors</a>
+			Fork on <a href="http://github.com/jamesrom/jamesrom.github.io/">GitHub</a>. Thanks to <a href="http://github.com/jamesrom/jamesrom.github.io/graphs/contributors">contributors</a>
 		</div>
 		<div class="footer web">
 			Visit <a href="http://jamesromeril.com/">jamesromeril.com</a>
 		</div>
 	</div>
 	
-	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.6.0/lodash.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.6.0/lodash.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 
 	<!-- Used to get valid "mousewheel" events in Firefox -->
 	<script src="jQuery_mousewheel_3_1_12.js"></script>
@@ -58,10 +65,74 @@
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		})(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
 
 		ga('create', 'UA-61555837-1', 'auto');
 		ga('send', 'pageview');
 	</script>
+
+	<!-- For Pie Chart -->
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
+	<script>
+
+	Highcharts.setOptions({
+     colors: ['#820080', '#0083c7', '#02be01', '#e5d900', '#e59500', '#e50000']
+    });
+
+	window.setInterval(function(){
+
+		$(function () {
+		    $('#pie-container').highcharts({
+		        chart: {
+		            plotBackgroundColor: null,
+		            plotBorderWidth: null,
+		            plotShadow: false,
+		            width: 200,
+		            height: 200,
+		            backgroundColor: 'transparent'
+		        },
+		        credits: {
+		        	enabled: false
+		        },
+		        title: {
+		            text: ''
+		        },
+		        tooltip: {
+		            pointFormat: '<b>{point.percentage:.1f}%</b>'
+		        },
+		        plotOptions: {
+		            pie: {
+		            	animation: false,
+		                allowPointSelect: true,
+		                cursor: 'pointer',
+		                dataLabels: {
+		                    enabled: false,
+		                    format: '{point.percentage:.1f} %',
+		                    style: {
+		                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+		                    }
+		                }
+		            }
+		        },
+		        series: [{
+		            type: 'pie',
+		            name: '',
+		            data: [
+		                ['Purple', Stats.f1],
+		                ['Blue', Stats.f2],
+		                ['Green', Stats.f3],
+		                ['Yellow', Stats.f4],
+		                ['Orange', Stats.f5],
+		                ['Red', Stats.f6]
+		            ]
+		        }]
+		    });
+		});
+  		
+	}, 10000);
+
+	</script>
+
 </body>
 </html>

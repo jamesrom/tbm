@@ -24,7 +24,7 @@ var Comms = (function() {
 		sock.onmessage = tick;
 	};
 	// Use CORS proxy by lezed1 to get the Reddit homepage!
-	redditRequester.open("get", "//cors-unblocker.herokuapp.com/get?url=https%3A%2F%2Fwww.reddit.com%2Fr%2Fthebutton", true);
+	redditRequester.open("get", "http://cors-unblocker.herokuapp.com/get?url=https%3A%2F%2Fwww.reddit.com%2Fr%2Fthebutton", true);
 	redditRequester.send();
 
 	function tick(evt) {
