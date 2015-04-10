@@ -1,7 +1,13 @@
 var Stats = (function() {
 	var self = {};
 
-	self.resets = 0;
+	self.resets  = 0;
+	self.purples = 0;
+	self.blues   = 0;
+	self.greens  = 0;
+	self.yellows = 0;
+	self.oranges = 0;
+	self.reds    = 0;
 	
 	self.render = function() {
 		_(self)
@@ -30,3 +36,4 @@ var Stats = (function() {
 
 	return self;
 }());
+
