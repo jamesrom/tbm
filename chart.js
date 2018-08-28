@@ -134,12 +134,16 @@ var Chart = (function() {
 			.attr('x', function(d, i) {
 				return xScale(i);
 			})
-			.attr('y', yPixel)
+			.attr('y', function(d, i) {
+				if (d.seconds_left == 60) {return yScale(59.5); }
+				else {return yPixel(d); }
+			})
 			.attr('width', function(d, i) {
 				return xScale(i+1) - xScale(i);
 			})
 			.attr('height', function(d, i) {
-				return yScale(60) - yPixel(d)
+				if (d.seconds_left == 60){ return yScale(0.5); }
+				else {return yScale(60) - yPixel(d); }
 			})
 			.attr('fill', flair);
 
@@ -155,7 +159,7 @@ var Chart = (function() {
 				return xScale(i+1) - xScale(i);
 			})
 			.attr('height', function(d, i) {
-				return yScale(60) - yPixel(d)
+				return yScale(60) - yPixel(d);
 			})
 			.attr('fill', flair)
 			.on('mouseover', tip.show)
